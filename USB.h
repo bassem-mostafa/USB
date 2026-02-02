@@ -144,7 +144,7 @@ extern "C"
     /**
      *  @brief Write data to USB peripheral
      *
-     *  @param[in] USBx      Peripheral
+     *  @param[in] USBx       Peripheral
      *  @param[in] Data       Data buffer
      *  @param[in] DataLength Length of data buffer
      *
@@ -155,7 +155,7 @@ extern "C"
     /**
      *  @brief Read data from USB peripheral
      *
-     *  @param[in] USBx      Peripheral
+     *  @param[in] USBx       Peripheral
      *  @param[in] Data       Data buffer
      *  @param[in] DataLength Length of data buffer
      *
