@@ -60,7 +60,7 @@ extern "C"
     #endif
 
     #ifndef USB_LOG
-        #define USB_LOG LOG_2 // PLATFORM_DEFAULT_LOG
+        #define USB_LOG PLATFORM_DEFAULT_LOG
     #endif
 
     #define USB_NAME       "USB"
