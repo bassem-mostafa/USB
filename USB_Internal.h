@@ -112,6 +112,8 @@ extern "C"
     USB_Status_t USB_Instance_Cycle( USB_Instance_t * Instance );
     USB_Status_t USB_Instance_DeInitialize( USB_Instance_t * Instance );
 
+    USB_Status_t USB_Instance_IsReady( USB_Instance_t * Instance );
+
     USB_Status_t USB_Instance_Write( USB_Instance_t * Instance, USB_Data_t * USB_Data, USB_DataLength_t USB_DataLength );
     USB_Status_t USB_Instance_Read( USB_Instance_t * Instance, USB_Data_t * USB_Data, USB_DataLength_t USB_DataLength );
 

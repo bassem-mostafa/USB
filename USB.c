@@ -241,6 +241,38 @@ USB_Status_t USB_DeInitialize( USB_t USBx )
     return Status;
 }
 
+USB_Status_t USB_IsReady( USB_t USBx )
+{
+    USB_Status_t Status = USB_Status_Success;
+    USB_Status_t USB_Status = USB_Status_Success;
+
+    do
+    {
+        USB_Trace( "%s( USBx=%d )", __FUNCTION__, USBx );
+
+        if ( ( Status = USB_IsValid( USBx ) ) != USB_Status_Success )
+        {
+            break;
+        }
+
+        for ( USB_t USB_x = USB_Null; USB_x < USB_Count; ++USB_x )
+        {
+            if ( USBx != USB_All && USBx != USB_x )
+            {
+                continue;
+            }
+
+            if ( ( USB_Status = USB_Instance_IsReady( &USB_Context.Instance[ USB_x ] ) ) != USB_Status_Success )
+            {
+                Status = USB_Status;
+            }
+        }
+    }
+    while ( 0 );
+
+    return Status;
+}
+
 USB_Status_t USB_Write( USB_t USBx, USB_Data_t * Data, USB_DataLength_t DataLength )
 {
     USB_Status_t Status = USB_Status_Success;
@@ -316,7 +348,7 @@ USB_Status_t USB_Read( USB_t USBx, USB_Data_t * Data, USB_DataLength_t DataLengt
 // #### Public Variable(s) #####################################################
 // #############################################################################
 
-const char USB_VERSION[] = "0.0.0.v20260203-0213";
+const char USB_VERSION[] = "0.0.0.v20260207-2231";
 
 // #############################################################################
 // #### File Guard #############################################################

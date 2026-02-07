@@ -142,6 +142,15 @@ extern "C"
     USB_Status_t USB_DeInitialize( USB_t USBx );
 
     /**
+     *  @brief Check readiness of USB peripheral
+     *
+     *  @param[in] USBx Peripheral
+     *
+     *  @return USB_Status_t
+     */
+    USB_Status_t USB_IsReady( USB_t USBx );
+
+    /**
      *  @brief Write data to USB peripheral
      *
      *  @param[in] USBx       Peripheral
