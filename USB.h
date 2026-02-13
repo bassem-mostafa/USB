@@ -154,23 +154,25 @@ extern "C"
      *  @brief Write data to USB peripheral
      *
      *  @param[in] USBx       Peripheral
+     *  @param[in] Interface  Interface
      *  @param[in] Data       Data buffer
      *  @param[in] DataLength Length of data buffer
      *
      *  @return USB_Status_t
      */
-    USB_Status_t USB_Write( USB_t USBx, USB_Data_t * Data, USB_DataLength_t DataLength );
+    USB_Status_t USB_Write( USB_t USBx, USB_Interface_t Interface, USB_Data_t * Data, USB_DataLength_t DataLength );
 
     /**
      *  @brief Read data from USB peripheral
      *
      *  @param[in] USBx       Peripheral
+     *  @param[in] Interface  Interface
      *  @param[in] Data       Data buffer
      *  @param[in] DataLength Length of data buffer
      *
      *  @return USB_Status_t
      */
-    USB_Status_t USB_Read( USB_t USBx, USB_Data_t * Data, USB_DataLength_t DataLength );
+    USB_Status_t USB_Read( USB_t USBx, USB_Interface_t Interface, USB_Data_t * Data, USB_DataLength_t DataLength );
 
     // #############################################################################
     // #### Public Variable(s) #####################################################

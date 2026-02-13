@@ -276,14 +276,14 @@ USB_Status_t USB_IsReady( USB_t USBx )
     return Status;
 }
 
-USB_Status_t USB_Write( USB_t USBx, USB_Data_t * Data, USB_DataLength_t DataLength )
+USB_Status_t USB_Write( USB_t USBx, USB_Interface_t Interface, USB_Data_t * Data, USB_DataLength_t DataLength )
 {
     USB_Status_t Status = USB_Status_Success;
     USB_Status_t USB_Status = USB_Status_Success;
 
     do
     {
-        USB_Trace( "%s( USB=%d, Data=%p, Length=%d )", __FUNCTION__, USBx, USB_Data, USB_DataLength );
+        USB_Trace( "%s( USB=%d, Interface=%d, Data=%p, Length=%d )", __FUNCTION__, USBx, Interface, Data, DataLength );
 
         if ( ( Status = USB_IsValid( USBx ) ) != USB_Status_Success )
         {
@@ -297,7 +297,7 @@ USB_Status_t USB_Write( USB_t USBx, USB_Data_t * Data, USB_DataLength_t DataLeng
                 continue;
             }
 
-            if ( ( USB_Status = USB_Instance_Write( &USB_Context.Instance[ USB_x ], Data, DataLength ) ) != USB_Status_Success )
+            if ( ( USB_Status = USB_Instance_Write( &USB_Context.Instance[ USB_x ], Interface, Data, DataLength ) ) != USB_Status_Success )
             {
                 Status = USB_Status;
             }
@@ -308,14 +308,14 @@ USB_Status_t USB_Write( USB_t USBx, USB_Data_t * Data, USB_DataLength_t DataLeng
     return Status;
 }
 
-USB_Status_t USB_Read( USB_t USBx, USB_Data_t * Data, USB_DataLength_t DataLength )
+USB_Status_t USB_Read( USB_t USBx, USB_Interface_t Interface, USB_Data_t * Data, USB_DataLength_t DataLength )
 {
     USB_Status_t Status = USB_Status_Success;
     USB_Status_t USB_Status = USB_Status_Success;
 
     do
     {
-        USB_Trace( "%s( USB=%d, Data=%p, Length=%d )", __FUNCTION__, USBx, USB_Data, USB_DataLength );
+        USB_Trace( "%s( USB=%d, Interface=%d, Data=%p, Length=%d )", __FUNCTION__, USBx, Interface, Data, DataLength );
 
         if ( ( Status = USB_IsValid( USBx ) ) != USB_Status_Success )
         {
@@ -336,7 +336,7 @@ USB_Status_t USB_Read( USB_t USBx, USB_Data_t * Data, USB_DataLength_t DataLengt
                 continue;
             }
 
-            if ( ( USB_Status = USB_Instance_Read( &USB_Context.Instance[ USB_x ], Data, DataLength ) ) != USB_Status_Success )
+            if ( ( USB_Status = USB_Instance_Read( &USB_Context.Instance[ USB_x ], Interface, Data, DataLength ) ) != USB_Status_Success )
             {
                 Status = USB_Status;
             }
@@ -351,7 +351,7 @@ USB_Status_t USB_Read( USB_t USBx, USB_Data_t * Data, USB_DataLength_t DataLengt
 // #### Public Variable(s) #####################################################
 // #############################################################################
 
-const char USB_VERSION[] = "0.0.0.v20260212-1958";
+const char USB_VERSION[] = "0.0.0.v20260213-1224";
 
 // #############################################################################
 // #### File Guard #############################################################
