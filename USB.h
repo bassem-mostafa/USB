@@ -144,11 +144,12 @@ extern "C"
     /**
      *  @brief Check readiness of USB peripheral
      *
-     *  @param[in] USBx Peripheral
+     *  @param[in] USBx      Peripheral
+     *  @param[in] Interface Interface
      *
      *  @return USB_Status_t
      */
-    USB_Status_t USB_IsReady( USB_t USBx );
+    USB_Status_t USB_IsReady( USB_t USBx, USB_Interface_t Interface );
 
     /**
      *  @brief Write data to USB peripheral
