@@ -88,7 +88,7 @@ extern "C"
     // #### Public Type(s) #########################################################
     // #############################################################################
 
-    typedef struct USB_Instance_Context_t USB_Instance_Context_t;
+    typedef struct USB_InstanceContext_t USB_InstanceContext_t;
 
     typedef struct USB_Instance
     {
@@ -96,7 +96,7 @@ extern "C"
 
         union
         {
-            USB_Instance_Context_t * Context;
+            USB_InstanceContext_t * Context;
             USB_STM32L496VGT6P_Instance_t * STM32L496VGT6P;
         };
     } USB_Instance_t;
