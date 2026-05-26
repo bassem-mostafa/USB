@@ -48,7 +48,7 @@ extern "C"
     // #### Include(s) #############################################################
     // #############################################################################
 
-    #include "USB_Port.h"
+    #include "USB.h"
     #include "driver/STM32L496VGT6P/USB_STM32L496VGT6P.h"
 
     // #############################################################################
@@ -88,16 +88,20 @@ extern "C"
     // #### Public Type(s) #########################################################
     // #############################################################################
 
-    typedef struct USB_InstanceContext_t USB_InstanceContext_t;
+    typedef enum USB_Type
+    {
+        USB_Type_Unknown = 0,
+        USB_Type_Null,
+        USB_Type_STM32L496VGT6P,
+    } USB_Type_t;
 
     typedef struct USB_Instance
     {
-        USB_t USBx;
+        USB_Type_t Type;
 
         union
         {
-            USB_InstanceContext_t * Context;
-            USB_STM32L496VGT6P_Instance_t * STM32L496VGT6P;
+            USB_STM32L496VGT6P_t STM32L496VGT6Px;
         };
     } USB_Instance_t;
 
@@ -106,16 +110,14 @@ extern "C"
     // #############################################################################
 
     // The following APIs MUST be provided by the port
-    USB_Status_t USB_IsValid( USB_t USBx );
+    USB_Status_t USB_Port_Initialize( USB_t USBx );
+    USB_Status_t USB_Port_Cycle( USB_t USBx );
+    USB_Status_t USB_Port_DeInitialize( USB_t USBx );
 
-    USB_Status_t USB_Instance_Initialize( USB_Instance_t * Instance );
-    USB_Status_t USB_Instance_Cycle( USB_Instance_t * Instance );
-    USB_Status_t USB_Instance_DeInitialize( USB_Instance_t * Instance );
+    USB_Status_t USB_Port_IsReady( USB_t USBx, USB_Interface_t Interface );
 
-    USB_Status_t USB_Instance_IsReady( USB_Instance_t * Instance, USB_Interface_t Interface );
-
-    USB_Status_t USB_Instance_Write( USB_Instance_t * Instance, USB_Interface_t Interface, USB_Data_t * Data, USB_DataLength_t DataLength );
-    USB_Status_t USB_Instance_Read( USB_Instance_t * Instance, USB_Interface_t Interface, USB_Data_t * Data, USB_DataLength_t DataLength );
+    USB_Status_t USB_Port_Write( USB_t USBx, USB_Interface_t Interface, USB_Data_t * Data, USB_DataLength_t DataLength );
+    USB_Status_t USB_Port_Read( USB_t USBx, USB_Interface_t Interface, USB_Data_t * Data, USB_DataLength_t DataLength );
 
     // #############################################################################
     // #### Public Variable(s) #####################################################
