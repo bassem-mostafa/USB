@@ -147,13 +147,10 @@ USB_Status_t USB_Initialize( USB_t USBx )
             break;
         }
 
-        for ( USB_t USB_x = USB_Null; USB_x < USB_Count; ++USB_x )
+        USB_t USB_start = ( USBx == USB_All ? USB_Null : USBx );
+        USB_t USB_end = ( USBx == USB_All ? USB_Count : USBx + 1 );
+        for ( USB_t USB_x = USB_start; USB_x < USB_end; ++USB_x )
         {
-            if ( USBx != USB_All && USBx != USB_x )
-            {
-                continue;
-            }
-
             if ( ( USB_Status = USB_Port_Initialize( USB_x ) ) != USB_Status_Success )
             {
                 Status = USB_Status;
@@ -179,13 +176,10 @@ USB_Status_t USB_Cycle( USB_t USBx )
             break;
         }
 
-        for ( USB_t USB_x = USB_Null; USB_x < USB_Count; ++USB_x )
+        USB_t USB_start = ( USBx == USB_All ? USB_Null : USBx );
+        USB_t USB_end = ( USBx == USB_All ? USB_Count : USBx + 1 );
+        for ( USB_t USB_x = USB_start; USB_x < USB_end; ++USB_x )
         {
-            if ( USBx != USB_All && USBx != USB_x )
-            {
-                continue;
-            }
-
             if ( ( USB_Status = USB_Port_Cycle( USB_x ) ) != USB_Status_Success )
             {
                 Status = USB_Status;
@@ -206,13 +200,10 @@ USB_Status_t USB_DeInitialize( USB_t USBx )
     {
         USB_Trace( "%s( USBx=%d )", __FUNCTION__, USBx );
 
-        for ( USB_t USB_x = USB_Null; USB_x < USB_Count; ++USB_x )
+        USB_t USB_start = ( USBx == USB_All ? USB_Null : USBx );
+        USB_t USB_end = ( USBx == USB_All ? USB_Count : USBx + 1 );
+        for ( USB_t USB_x = USB_start; USB_x < USB_end; ++USB_x )
         {
-            if ( USBx != USB_All && USBx != USB_x )
-            {
-                continue;
-            }
-
             if ( ( USB_Status = USB_Port_DeInitialize( USB_x ) ) != USB_Status_Success )
             {
                 Status = USB_Status;
@@ -238,20 +229,21 @@ USB_Status_t USB_IsReady( USB_t USBx, USB_Interface_t Interface )
     {
         USB_Trace( "%s( USBx=%d )", __FUNCTION__, USBx );
 
-        for ( USB_t USB_x = USB_Null; USB_x < USB_Count; ++USB_x )
+        if ( USBx == USB_All || Interface == USB_Interface_All )
         {
-            if ( USBx != USB_All && USBx != USB_x )
-            {
-                continue;
-            }
+            // FIXME What should be done while checking all ?!
+            Status = USB_Status_NotSupported;
+            break;
+        }
 
-            for ( USB_Interface_t Interface_x = USB_Interface_Null; Interface_x < USB_Interface_Count; ++Interface_x )
+        USB_t USB_start = ( USBx == USB_All ? USB_Null : USBx );
+        USB_t USB_end = ( USBx == USB_All ? USB_Count : USBx + 1 );
+        for ( USB_t USB_x = USB_start; USB_x < USB_end; ++USB_x )
+        {
+            USB_Interface_t Interface_start = ( Interface == USB_Interface_All ? USB_Interface_Null : Interface );
+            USB_Interface_t Interface_end = ( Interface == USB_Interface_All ? USB_Interface_Count : Interface + 1 );
+            for ( USB_Interface_t Interface_x = Interface_start; Interface_x < Interface_end; ++Interface_x )
             {
-                if ( Interface != USB_Interface_All && Interface != Interface_x )
-                {
-                    continue;
-                }
-
                 if ( ( USB_Status = USB_Port_IsReady( USB_x, Interface_x ) ) != USB_Status_Success )
                 {
                     Status = USB_Status;
@@ -273,23 +265,25 @@ USB_Status_t USB_Write( USB_t USBx, USB_Interface_t Interface, USB_Data_t * Data
     {
         USB_Trace( "%s( USB=%d, Interface=%d, Data=%p, Length=%d )", __FUNCTION__, USBx, Interface, Data, DataLength );
 
-        if ( USBx == USB_All )
+        if ( USBx == USB_All || Interface == USB_Interface_All )
         {
             // FIXME What should be done while writing to all ?!
             Status = USB_Status_NotSupported;
             break;
         }
 
-        for ( USB_t USB_x = USB_Null; USB_x < USB_Count; ++USB_x )
+        USB_t USB_start = ( USBx == USB_All ? USB_Null : USBx );
+        USB_t USB_end = ( USBx == USB_All ? USB_Count : USBx + 1 );
+        for ( USB_t USB_x = USB_start; USB_x < USB_end; ++USB_x )
         {
-            if ( USBx != USB_All && USBx != USB_x )
+            USB_Interface_t Interface_start = ( Interface == USB_Interface_All ? USB_Interface_Null : Interface );
+            USB_Interface_t Interface_end = ( Interface == USB_Interface_All ? USB_Interface_Count : Interface + 1 );
+            for ( USB_Interface_t Interface_x = Interface_start; Interface_x < Interface_end; ++Interface_x )
             {
-                continue;
-            }
-
-            if ( ( USB_Status = USB_Port_Write( USB_x, Interface, Data, DataLength ) ) != USB_Status_Success )
-            {
-                Status = USB_Status;
+                if ( ( USB_Status = USB_Port_Write( USB_x, Interface_x, Data, DataLength ) ) != USB_Status_Success )
+                {
+                    Status = USB_Status;
+                }
             }
         }
     }
@@ -307,23 +301,25 @@ USB_Status_t USB_Read( USB_t USBx, USB_Interface_t Interface, USB_Data_t * Data,
     {
         USB_Trace( "%s( USB=%d, Interface=%d, Data=%p, Length=%d )", __FUNCTION__, USBx, Interface, Data, DataLength );
 
-        if ( USBx == USB_All )
+        if ( USBx == USB_All || Interface == USB_Interface_All )
         {
             // FIXME What should be done while reading from all ?!
             Status = USB_Status_NotSupported;
             break;
         }
 
-        for ( USB_t USB_x = USB_Null; USB_x < USB_Count; ++USB_x )
+        USB_t USB_start = ( USBx == USB_All ? USB_Null : USBx );
+        USB_t USB_end = ( USBx == USB_All ? USB_Count : USBx + 1 );
+        for ( USB_t USB_x = USB_start; USB_x < USB_end; ++USB_x )
         {
-            if ( USBx != USB_All && USBx != USB_x )
+            USB_Interface_t Interface_start = ( Interface == USB_Interface_All ? USB_Interface_Null : Interface );
+            USB_Interface_t Interface_end = ( Interface == USB_Interface_All ? USB_Interface_Count : Interface + 1 );
+            for ( USB_Interface_t Interface_x = Interface_start; Interface_x < Interface_end; ++Interface_x )
             {
-                continue;
-            }
-
-            if ( ( USB_Status = USB_Port_Read( USB_x, Interface, Data, DataLength ) ) != USB_Status_Success )
-            {
-                Status = USB_Status;
+                if ( ( USB_Status = USB_Port_Read( USB_x, Interface_x, Data, DataLength ) ) != USB_Status_Success )
+                {
+                    Status = USB_Status;
+                }
             }
         }
     }
@@ -336,7 +332,7 @@ USB_Status_t USB_Read( USB_t USBx, USB_Interface_t Interface, USB_Data_t * Data,
 // #### Public Variable(s) #####################################################
 // #############################################################################
 
-const char USB_VERSION[] = "0.0.0.v20260604-0241";
+const char USB_VERSION[] = "0.0.0.v20260604-1610";
 
 // #############################################################################
 // #### File Guard #############################################################
